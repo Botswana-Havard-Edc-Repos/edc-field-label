@@ -41,11 +41,15 @@ class TestReadonlyAdminMixin(TestCase):
         """Assert that the default field labels has not changed."""
         self.request.GET['label_replacements'] = json.dumps({}, cls=DatetimeEncoder)
         form = self.custom_model_admin.get_form(self.request)
-        original_label = 'We last spoke with you on last_visit_date and scheduled an appointment for you in an HIV care clinic on last_appt_date. Did you keep that appointment?'
+        original_label = (
+            'We last spoke with you on last_visit_date and scheduled an appointment for'
+            ' you in an HIV care clinic on last_appt_date. Did you keep that appointment?')
         self.assertEqual(form.base_fields['my_first_field'].label, original_label)
 
     def test_replace_labels(self):
         """Assert that a place holder has been replaced with a value."""
-        new_label = 'We last spoke with you on Monday, July 07, 1986 at 13:14 hours and scheduled an appointment for you in an HIV care clinic on Monday, July 07, 1986 at 13:14 hours. Did you keep that appointment?'
+        new_label = ('We last spoke with you on Monday, July 07, 1986 at 13:14 hours and scheduled'
+                     ' an appointment for you in an HIV care clinic on Monday,'
+                     ' July 07, 1986 at 13:14 hours. Did you keep that appointment?')
         form = self.custom_model_admin.get_form(self.request)
         self.assertEqual(form.base_fields['my_first_field'].label, new_label)

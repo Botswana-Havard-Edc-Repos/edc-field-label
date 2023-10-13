@@ -9,7 +9,8 @@ class ModifyFormLabelMixin(object):
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(ModifyFormLabelMixin, self).get_form(request, obj, **kwargs)
-        self.label_replacements = json.loads((request.GET.get('label_replacements', json.dumps({}, cls=DatetimeEncoder))))
+        self.label_replacements = json.loads((request.GET.get(
+            'label_replacements', json.dumps({}, cls=DatetimeEncoder))))
         return self.replace_labels(form)
 
     def replace_labels(self, form):
