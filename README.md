@@ -1,3 +1,4 @@
+[![Coverage Status](https://coveralls.io/repos/github/Botswana-Havard-Edc-Repos/edc-field-label/badge.svg?branch=develop)](https://coveralls.io/github/Botswana-Havard-Edc-Repos/edc-field-label?branch=develop)
 # edc-field-label
 Modify or replace a form field label
 
