@@ -13,7 +13,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.7, 3.8, 3.9,3.12.0]
+        python-version: [3.12.0]
 
 
     steps:
@@ -27,12 +27,21 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8
         pip install coverage
+        pip install coveralls 
+        pip install setuptools
         pip install -r requirements.txt
-    - name: Run Tests
+    - name: Run Flake8 and check
       run: |
         flake8 edc_field_label
-        python manage.py test
-    - name: Coverage 
+        python manage.py check
+    - name: Run Tests
       run: |
-        coverage run manage.py test
-        coverage report -m
+          coverage run --source=edc_field_label manage.py test
+          coverage xml -i
+      env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+    - name: Upload to Coveralls
+      uses: coverallsapp/github-action@v2
+      with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ./coverage.xml
